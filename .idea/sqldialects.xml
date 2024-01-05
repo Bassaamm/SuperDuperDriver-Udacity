@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/SuperDuperDriver/src/main/java/com/udacity/SuperDuperDriver/SuperDuperDriver/mapper/CredentialsMapper.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/SuperDuperDriver/src/main/java/com/udacity/SuperDuperDriver/SuperDuperDriver/mapper/FileMapper.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/SuperDuperDriver/src/main/java/com/udacity/SuperDuperDriver/SuperDuperDriver/mapper/NoteMapper.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/SuperDuperDriver/src/main/java/com/udacity/SuperDuperDriver/SuperDuperDriver/mapper/UserMapper.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/SuperDuperDriver/src/main/resources/schema.sql" dialect="H2" />
+  </component>
+</project>
