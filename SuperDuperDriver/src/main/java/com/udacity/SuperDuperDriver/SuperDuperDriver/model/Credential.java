@@ -7,6 +7,7 @@ public class Credential {
     private String key;
     private String password;
     private Integer userId;
+    private String decryptedPassword;
 
     public Credential(Integer credentialId, String url, String username, String key, String password, Integer userId) {
         this.credentialId = credentialId;
@@ -24,6 +25,13 @@ public class Credential {
         this.key = key;
         this.password = credentialForm.getPassword();
         this.userId = userId;
+    }
+    public Credential(CredentialForm credentialForm, String key) {
+        this.credentialId = credentialForm.getId();
+        this.url = credentialForm.getUrl();
+        this.username = credentialForm.getUsername();
+        this.key = key;
+        this.password = credentialForm.getPassword();
     }
     public Credential(String url, String username ,String password) {
         this.url = url;
@@ -54,6 +62,9 @@ public class Credential {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+    public void setDecryptedPassword(String decryptedPassword) {
+        this.decryptedPassword = decryptedPassword;
+    }
 
     public Integer getCredentialId() {
         return credentialId;
@@ -78,4 +89,8 @@ public class Credential {
     public Integer getUserId() {
         return userId;
     }
+    public String getDecryptedPassword() {
+        return decryptedPassword;
+    }
+
 }

@@ -20,19 +20,26 @@ public class CredentialsService {
         this.encryptionService = encryptionService;
     }
 
-    public void addCredentials(CredentialForm newCredential, Integer userId ) throws NoSuchAlgorithmException {
-        String key=encryptionService.generateKey();
-
-        Credential credential = new Credential(newCredential,key,userId);
-        credentialsMapper.insertCredential(credential);
+    public void addCredentials(CredentialForm newCredential,String key, Integer userId ) throws Exception {
+          String newUsername = newCredential.getUsername();
+            Credential lookForDuplicate = credentialsMapper.findCredentialByUsername(newUsername);
+        if (lookForDuplicate != null && newUsername.equals(lookForDuplicate.getUsername())) {
+            throw new Exception("The username already exist");
+        }
+          Credential credential = new Credential(newCredential,key,userId);
+          credentialsMapper.insertCredential(credential);
     }
     public List<Credential> getCredentials(Integer userId){
-        return credentialsMapper.getCredentialsByUserId(userId);
+        List<Credential> credentialsList = credentialsMapper.getCredentialsByUserId(userId);
+        for(Credential cre : credentialsList){
+            cre.setDecryptedPassword(encryptionService.decryptValue(cre.getPassword(),cre.getKey()));
+        }
+        return credentialsList;
     }
     public void deleteCredential(Integer credentialId){
         credentialsMapper.deleteCredential(credentialId);
     }
-    public void updateCredential(CredentialForm newCre){
+    public void updateCredential(Credential newCre){
         credentialsMapper.update(newCre);
     }
 

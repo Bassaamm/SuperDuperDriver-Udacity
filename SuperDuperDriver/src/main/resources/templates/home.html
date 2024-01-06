@@ -163,7 +163,7 @@
                                         th:data-id="${cre.getCredentialId()}"
                                         th:data-url="${cre.getUrl()}"
                                         th:data-username="${cre.getUsername()}"
-                                        th:data-password="${cre.getPassword()}"
+                                        th:data-password="${cre.getDecryptedPassword()}"
                                         th:onclick="showCredentialModal(this.getAttribute('data-id'), this.getAttribute('data-url'), this.getAttribute('data-username'),this.getAttribute('data-password'))">
                                 Edit</button>
                                 <form th:action="@{/credentials/delete/{credentialId}(credentialId=${cre.getCredentialId()})}" method="POST">

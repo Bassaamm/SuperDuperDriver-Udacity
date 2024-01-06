@@ -1,5 +1,6 @@
 package com.udacity.SuperDuperDriver.SuperDuperDriver.controller;
 
+import com.udacity.SuperDuperDriver.SuperDuperDriver.model.Credential;
 import com.udacity.SuperDuperDriver.SuperDuperDriver.model.CredentialForm;
 import com.udacity.SuperDuperDriver.SuperDuperDriver.model.NoteForm;
 import com.udacity.SuperDuperDriver.SuperDuperDriver.service.CredentialsService;
@@ -36,21 +37,23 @@ public class CredentialsController {
             String key = encryptionService.generateKey();
             String hashedPassword = encryptionService.encryptValue(newCredential.getPassword(),key);
             newCredential.setPassword(hashedPassword);
-            credentialsService.addCredentials(newCredential,userId);
+            credentialsService.addCredentials(newCredential,key,userId);
             redirectAttributes.addFlashAttribute("message", "Credential successfully added");
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message" , "The Credential was not added, try again");
+            redirectAttributes.addFlashAttribute("message" , e.getMessage());
 
         }
         return "redirect:/home";
-
-
     }
 
     @PutMapping
     public String editCredential(@ModelAttribute("newCredential") CredentialForm newCredential , RedirectAttributes redirectAttributes) {
         try{
-            credentialsService.updateCredential(newCredential);
+            String key = encryptionService.generateKey();
+            String hashedPassword = encryptionService.encryptValue(newCredential.getPassword(),key);
+            newCredential.setPassword(hashedPassword);
+            Credential credential = new Credential(newCredential , key );
+            credentialsService.updateCredential(credential );
             redirectAttributes.addFlashAttribute("message", "Credential successfully edited");
 
         }catch (Exception e){

@@ -46,7 +46,7 @@ public class EncryptionService {
             logger.error(e.getMessage());
         }
 
-        return new String(decryptedValue);
+        return new String(decryptedValue != null ? decryptedValue : new byte[0]);
     }
 
     public String generateKey() throws NoSuchAlgorithmException {
