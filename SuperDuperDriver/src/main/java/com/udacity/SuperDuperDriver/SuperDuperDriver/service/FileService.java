@@ -1,6 +1,7 @@
 package com.udacity.SuperDuperDriver.SuperDuperDriver.service;
 
 import com.udacity.SuperDuperDriver.SuperDuperDriver.mapper.FileMapper;
+import com.udacity.SuperDuperDriver.SuperDuperDriver.model.Credential;
 import com.udacity.SuperDuperDriver.SuperDuperDriver.model.File;
 
 import java.io.IOException;
@@ -39,16 +40,15 @@ public class FileService {
             return null;
         }
     }
-    public void addFile(FileForm file , Integer userId) throws IOException {
+    public void addFile(FileForm file , Integer userId) throws Exception {
+        String newFileName = file.getFile().getOriginalFilename();
+        File lookForDuplicate = fileMapper.findFileByName(newFileName);
+        if (lookForDuplicate != null && newFileName.equals(lookForDuplicate.getFileName())) {
+            throw new Exception("The file name already exist");
+        }
         MultipartFile multipartFile = file.getFile();
         File uploadeFile = new File(multipartFile , userId);
-
-        try{
-            fileMapper.insertFile(uploadeFile);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
+        fileMapper.insertFile(uploadeFile);
 
     }
 
@@ -62,4 +62,6 @@ public class FileService {
 
     }
 
-}
+    }
+
+
